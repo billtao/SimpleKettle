@@ -68,13 +68,10 @@ public class Util {
 	    return this.connection;
 	  }
 	 
-	  public static JobEntity getJob(String path, String inteval, String transferName)
+	  public static JobEntity getJob(String inteval)
 	  {
 	    JobEntity je = new JobEntity();
 	    je.setJOB_INTERVAL_MINUTES(inteval);
-	    je.setJOB_NAME(transferName);
-	    je.setJOB_TRANSFER_NAME(transferName);
-	    je.setJOB_TRANSFER_PATH(path + transferName + ".ktr");
 	    return je;
 	  }
 	  
@@ -122,7 +119,10 @@ public class Util {
 				  if(i==0) {
 					  te.setSOURCE_TABLE_NAME(rs.getString("TABLE_ENG_NAME"));
 					  te.setTARGET_TABLE_NAME(rs.getString("TABLE_ENG_NAME"));
-					  te.setTRANSFER_NAME(rs.getString("PROV_DEPT_ID")+"_"+rs.getString("TABLE_ENG_NAME")+"_"+rs.getString("APPLY_SITE_NO")+"_"+seq);
+					  te.setTRANSFER_DELETE_NAME(rs.getString("PROV_DEPT_ID")+"_"+rs.getString("TABLE_ENG_NAME")+"_"+rs.getString("APPLY_SITE_NO")+"_DELETE_"+seq);
+					  te.setTRANSFER_UPDATE_NAME(rs.getString("PROV_DEPT_ID")+"_"+rs.getString("TABLE_ENG_NAME")+"_"+rs.getString("APPLY_SITE_NO")+"_UPDATE_"+seq);
+					  te.setTRANSFER_UPDATE_BASE_NAME(rs.getString("PROV_DEPT_ID")+"_"+rs.getString("TABLE_ENG_NAME")+"_"+rs.getString("APPLY_SITE_NO")+"_UPDATE_BASE_"+seq);
+					  te.setTRANSFER_PROVIDER_TABLENAME_APPLY(rs.getString("PROV_DEPT_ID")+"_"+rs.getString("TABLE_ENG_NAME")+"_"+rs.getString("APPLY_SITE_NO"));
 					  te.setCATA_ID(rs.getString("CATA_ID"));
 					  te.setAPPLY_SITE_NO(rs.getString("APPLY_SITE_NO"));
 					  te.setPROVIDE_SITE_NO(rs.getString("PROV_DEPT_ID"));

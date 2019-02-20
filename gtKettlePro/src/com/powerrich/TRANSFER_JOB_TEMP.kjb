@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-	<name>TRANSFER_JOB_TEMP</name>
+	<name>JOB_NAME</name>
 	<description/>
 	<extended_description/>
 	<job_version/>
@@ -292,8 +292,8 @@
 			<type>SPECIAL</type>
 			<start>Y</start>
 			<dummy>N</dummy>
-			<repeat>N</repeat>
-			<schedulerType>0</schedulerType>
+			<repeat>Y</repeat>
+			<schedulerType>1</schedulerType>
 			<intervalSeconds>0</intervalSeconds>
 			<intervalMinutes>60</intervalMinutes>
 			<hour>12</hour>
@@ -307,12 +307,12 @@
 			<yloc>176</yloc>
 		</entry>
 		<entry>
-			<name>DELETE_DATA</name>
+			<name>TRANSFER_JOB_DEL_STEP_NAME</name>
 			<description/>
 			<type>TRANS</type>
 			<specification_method>filename</specification_method>
 			<trans_object_id/>
-			<filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;TRANSFER_TEMP_DELETE.ktr</filename>
+			<filename>TRANSFER_JOB_DEL_STEP_FILE_PATH</filename>
 			<transname/>
 			<arg_from_previous>N</arg_from_previous>
 			<params_from_previous>N</params_from_previous>
@@ -342,12 +342,12 @@
 			<yloc>176</yloc>
 		</entry>
 		<entry>
-			<name>SYNC_DATA</name>
+			<name>TRANSFER_JOB_SYNC_DATA_STEP_NAME</name>
 			<description/>
 			<type>TRANS</type>
 			<specification_method>filename</specification_method>
 			<trans_object_id/>
-			<filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;TRANSFER_TEMP_UPDATE.ktr</filename>
+			<filename>TRANSFER_JOB_SYNC_DATA_STEP_FILE_PATH</filename>
 			<transname/>
 			<arg_from_previous>N</arg_from_previous>
 			<params_from_previous>N</params_from_previous>
@@ -377,12 +377,12 @@
 			<yloc>176</yloc>
 		</entry>
 		<entry>
-			<name>UPDATE_BASE</name>
+			<name>TRANSFER_JOB_UPDATE_BASE_STEP_NAME</name>
 			<description/>
 			<type>TRANS</type>
 			<specification_method>filename</specification_method>
 			<trans_object_id/>
-			<filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;TRANSFER_TEMP_UPDATE_BASE.ktr</filename>
+			<filename>TRANSFER_JOB_UPDATE_BASE_STEP_FILE_PATH</filename>
 			<transname/>
 			<arg_from_previous>N</arg_from_previous>
 			<params_from_previous>N</params_from_previous>
@@ -412,7 +412,7 @@
 			<yloc>176</yloc>
 		</entry>
 		<entry>
-			<name>&#x6210;&#x529f;</name>
+			<name>SUCCESS_END</name>
 			<description/>
 			<type>SUCCESS</type>
 			<parallel>N</parallel>
@@ -425,7 +425,7 @@
 	<hops>
 		<hop>
 			<from>START</from>
-			<to>DELETE_DATA</to>
+			<to>TRANSFER_JOB_DEL_STEP_NAME</to>
 			<from_nr>0</from_nr>
 			<to_nr>0</to_nr>
 			<enabled>Y</enabled>
@@ -433,8 +433,8 @@
 			<unconditional>Y</unconditional>
 		</hop>
 		<hop>
-			<from>DELETE_DATA</from>
-			<to>SYNC_DATA</to>
+			<from>TRANSFER_JOB_DEL_STEP_NAME</from>
+			<to>TRANSFER_JOB_SYNC_DATA_STEP_NAME</to>
 			<from_nr>0</from_nr>
 			<to_nr>0</to_nr>
 			<enabled>Y</enabled>
@@ -442,8 +442,8 @@
 			<unconditional>N</unconditional>
 		</hop>
 		<hop>
-			<from>SYNC_DATA</from>
-			<to>UPDATE_BASE</to>
+			<from>TRANSFER_JOB_SYNC_DATA_STEP_NAME</from>
+			<to>TRANSFER_JOB_UPDATE_BASE_STEP_NAME</to>
 			<from_nr>0</from_nr>
 			<to_nr>0</to_nr>
 			<enabled>Y</enabled>
@@ -451,8 +451,8 @@
 			<unconditional>N</unconditional>
 		</hop>
 		<hop>
-			<from>UPDATE_BASE</from>
-			<to>&#x6210;&#x529f;</to>
+			<from>TRANSFER_JOB_UPDATE_BASE_STEP_NAME</from>
+			<to>SUCCESS_END</to>
 			<from_nr>0</from_nr>
 			<to_nr>0</to_nr>
 			<enabled>Y</enabled>
