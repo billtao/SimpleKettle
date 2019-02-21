@@ -38,7 +38,20 @@ public class WriteKettleScriptFile {
 			//Encr encr = new Encr();
 			for (int i = 0; i < tableArray.length; i++) {
 				String[] applyment = tableArray[i].split(";");
-				list = kettleUtil.getTransfEntity(con, applyment[0], applyment[1]);
+				if(applyment.length==1) {
+					list = kettleUtil.getTransfEntity(con, applyment[0], "");
+				}else {
+					StringBuffer inSql = new StringBuffer();
+					for (int k = 1; k < applyment.length; k++) {
+						inSql.append("'");
+						inSql.append(applyment[k]);
+						inSql.append("'");
+						if(k!=applyment.length-2) {
+							inSql.append(",");
+						}
+					}
+					list = kettleUtil.getTransfEntity(con, applyment[0], inSql.toString());
+				}
 				System.out.println("查询到底长度：" + list.size());
 				for (int j = 0; (list != null) && (list.size() != 0) && (j < list.size()); j++) {
 					TransfEntity teEntity = (TransfEntity) list.get(j);

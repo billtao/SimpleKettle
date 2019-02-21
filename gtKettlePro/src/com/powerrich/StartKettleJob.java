@@ -4,7 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
 import org.pentaho.di.core.KettleEnvironment;
+import org.pentaho.di.core.database.DatabaseMeta;
+import org.pentaho.di.core.logging.JobLogTable;
 import org.pentaho.di.job.Job;
 import org.pentaho.di.job.JobMeta;
 
@@ -14,9 +19,28 @@ public class StartKettleJob {
 		Util kettleUtil = new Util();
 		try {
 			KettleEnvironment.init();
+			Logger.getLogger("org.pentaho.di").addAppender(new FileAppender(new SimpleLayout(), kettleUtil.kettleTemplateDir+"logger.log"));
 			List<String> jobFileList = getList(kettleUtil.kettleJobDir);
 			for (int i = 0; jobFileList != null && jobFileList.size() != 0 && i < jobFileList.size(); i++) {
 				JobMeta jm = new JobMeta((String) jobFileList.get(i), null);
+				
+				DatabaseMeta databaseMeta = new DatabaseMeta();
+				databaseMeta.setName("1");
+				databaseMeta.setDatabaseType(kettleUtil.logDbType);
+				databaseMeta.setAccessType(DatabaseMeta.TYPE_ACCESS_NATIVE);
+				databaseMeta.setHostname(kettleUtil.logDbIp);
+				databaseMeta.setDBName(kettleUtil.logDbName);
+				databaseMeta.setDBPort(kettleUtil.logDbPort);
+				databaseMeta.setUsername(kettleUtil.logDbUsername);
+				databaseMeta.setPassword(kettleUtil.logDbPassword);
+				jm.addDatabase(databaseMeta);
+				
+				JobLogTable jobLogTable = JobLogTable.getDefault(jm, jm);
+				jobLogTable.setConnectionName("1");
+				jobLogTable.setSchemaName(kettleUtil.logDbSchema);
+				jobLogTable.setTableName(kettleUtil.logTable);
+				jm.setJobLogTable(jobLogTable);
+				
 				Job job = new Job(null, jm);
 				job.start();
 			}

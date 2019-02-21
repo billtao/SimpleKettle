@@ -27,6 +27,14 @@ public class Util {
 	public String kettleTemplateDir;
 	public String kettleJobDir;
 	public String jobInterval;
+	public String logDbIp;
+	public String logDbName;
+	public String logDbSchema;
+	public String logDbPort;
+	public String logDbUsername;
+	public String logDbPassword;
+	public String logTable;
+	public String logDbType;
 	
 	public Util()
 	{
@@ -41,6 +49,14 @@ public class Util {
 	      this.kettleTemplateDir = prop.getProperty("kettleTemplateDir");
 	      this.kettleJobDir = prop.getProperty("kettleJobDir");
 	      this.jobInterval = prop.getProperty("jobInterval", "10");
+	      this.logDbIp = prop.getProperty("log.dbIp");
+	      this.logDbName = prop.getProperty("log.dbName");
+	      this.logDbSchema = prop.getProperty("log.dbSchema");
+	      this.logDbPort = prop.getProperty("log.dbPort");
+	      this.logDbUsername = prop.getProperty("log.dbUsername");
+	      this.logDbPassword = prop.getProperty("log.dbPassword");
+	      this.logTable = prop.getProperty("log.table");
+	      this.logDbType = prop.getProperty("log.dbType");
 	    }
 	    catch (IOException e)
 	    {
@@ -89,8 +105,8 @@ public class Util {
 				  + " and s.state = 0 "
 				  + " and s.realstate = 1 "
 				  + " and s.table_eng_name='"+tablename+"'";
-		  if(applySiteNo!=null||!"".equals(applySiteNo)) {
-			  sql = sql + " and s.apply_site_no='"+applySiteNo+"'";
+		  if(applySiteNo!=null&&!"".equals(applySiteNo)) {
+			  sql = sql + " and s.apply_site_no in ("+applySiteNo+")";
 		  }
 		  sql = sql+ " order by s.apply_site_no ";
 		  System.out.println(sql);
