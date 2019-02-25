@@ -11,9 +11,9 @@
     </parameters>
 		<log>
 			<trans-log-table>
-				<connection/>
+				<connection>log_db</connection>
 				<schema/>
-				<table/>
+				<table>LOG_ENTRY_TABLE_NAME</table>
 				<size_limit_lines/>
 				<interval/>
 				<timeout_days/>
@@ -434,7 +434,58 @@
 		<is_key_private>N</is_key_private>
 	</info>
 	<notepads>
-  </notepads>
+    </notepads>
+    <connection>
+		<name>log_db</name>
+		<server>LOG_DB_IP</server>
+		<type>LOG_DB_TYPE</type>
+		<access>Native</access>
+		<database>LOG_DB_NAME</database>
+		<port>LOG_DB_PORT</port>
+		<username>LOG_DB_USERNAME</username>
+		<password>LOG_DB_ENCREPTED_PASSWORD</password>
+		<servername/>
+		<data_tablespace/>
+		<index_tablespace/>
+		<attributes>
+			<attribute>
+				<code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+				<attribute>N</attribute>
+			</attribute>
+			<attribute>
+				<code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+				<attribute>N</attribute>
+			</attribute>
+			<attribute>
+				<code>IS_CLUSTERED</code>
+				<attribute>N</attribute>
+			</attribute>
+			<attribute>
+				<code>PORT_NUMBER</code>
+				<attribute>LOG_DB_PORT</attribute>
+			</attribute>
+			<attribute>
+				<code>PRESERVE_RESERVED_WORD_CASE</code>
+				<attribute>Y</attribute>
+			</attribute>
+			<attribute>
+				<code>QUOTE_ALL_FIELDS</code>
+				<attribute>N</attribute>
+			</attribute>
+			<attribute>
+				<code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+				<attribute>Y</attribute>
+			</attribute>
+			<attribute>
+				<code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+				<attribute>Y</attribute>
+			</attribute>
+			<attribute>
+				<code>USE_POOLING</code>
+				<attribute>N</attribute>
+			</attribute>
+		</attributes>
+	</connection>
 	<connection>
 		<name>TARGET_DB_NAME</name>
 		<server>TARGET_DB_IP</server>

@@ -30,7 +30,9 @@ public class WriteKettleScriptFile {
 		Connection con = kettleUtil.getConnection();
 
 		String tables = readTemplateXML(kettleUtil.kettleTemplateDir + TABLE);
+		System.out.println(tables);
 		String[] tableArray = tables.split(",");
+		System.out.println("长度："+tableArray.length);
 
 		List<TransfEntity> list = null;
 		try {
@@ -38,15 +40,17 @@ public class WriteKettleScriptFile {
 			//Encr encr = new Encr();
 			for (int i = 0; i < tableArray.length; i++) {
 				String[] applyment = tableArray[i].split(";");
+				System.out.println("循环"+i+"次，表名："+applyment[0]+",订阅放数量："+applyment.length);
 				if(applyment.length==1) {
 					list = kettleUtil.getTransfEntity(con, applyment[0], "");
 				}else {
 					StringBuffer inSql = new StringBuffer();
 					for (int k = 1; k < applyment.length; k++) {
+						System.out.println("订阅方式site no："+applyment[k]);
 						inSql.append("'");
 						inSql.append(applyment[k]);
 						inSql.append("'");
-						if(k!=applyment.length-2) {
+						if(k!=applyment.length-1) {
 							inSql.append(",");
 						}
 					}
@@ -131,6 +135,14 @@ public class WriteKettleScriptFile {
 				je.getTRANSFER_JOB_UPDATE_BASE_STEP_FILE_PATH());
 		kjbTempXML = kjbTempXML.replaceAll("JOB_INTERVAL_SECONDS", je.getJOB_INTERVAL_SECONDS());
 		kjbTempXML = kjbTempXML.replaceAll("JOB_INTERVAL_MINUTES", je.getJOB_INTERVAL_MINUTES());
+		/*替换日志数据库连接信息*/
+	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_TABLE", je.getLOG_DB_TABLE());
+	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_IP", je.getLOG_DB_IP());
+	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_NAME", je.getLOG_DB_NAME());
+	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_PORT", je.getLOG_DB_PORT());
+	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_TYPE", je.getLOG_DB_TYPE());
+	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_USERNAME", je.getLOG_DB_USERNAME());
+	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_ENCREPTED_PASSWORD", Encr.encryptPasswordIfNotUsingVariables(Password.pWORD(je.getLOG_DB_ENCREPTED_PASSWORD(), 2)));
 		return kjbTempXML;
 	}
 
@@ -179,6 +191,14 @@ public class WriteKettleScriptFile {
 			ktrTempXML = ktrTempXML.replaceAll("TARGET_DB_USERNAME", te.getTARGET_DB_USERNAME());
 			ktrTempXML = ktrTempXML.replaceAll("TARGET_DATABASE_ENCREPTED_PASSWORD", Encr
 					.encryptPasswordIfNotUsingVariables(Password.pWORD(te.getTARGET_DATABASE_ENCREPTED_PASSWORD(), 2)));
+			/*替换日志数据库连接信息*/
+	        ktrTempXML = ktrTempXML.replaceAll("LOG_ENTRY_TABLE_NAME", te.getLOG_ENTRY_TABLE_NAME());
+	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_IP", te.getLOG_DB_IP());
+	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_NAME", te.getLOG_DB_NAME());
+	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_PORT", te.getLOG_DB_PORT());
+	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_TYPE", te.getLOG_DB_TYPE());
+	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_USERNAME", te.getLOG_DB_USERNAME());
+	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_ENCREPTED_PASSWORD", Encr.encryptPasswordIfNotUsingVariables(Password.pWORD(te.getLOG_DB_ENCREPTED_PASSWORD(), 2)));
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}

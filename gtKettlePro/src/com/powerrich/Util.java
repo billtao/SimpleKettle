@@ -28,13 +28,14 @@ public class Util {
 	public String kettleJobDir;
 	public String jobInterval;
 	public String logDbIp;
+	public String logDbType;
 	public String logDbName;
-	public String logDbSchema;
 	public String logDbPort;
 	public String logDbUsername;
 	public String logDbPassword;
-	public String logTable;
-	public String logDbType;
+	public String jobLogTable;
+	public String jobLogEntryTable;
+	public String logDbSchema;
 	
 	public Util()
 	{
@@ -55,7 +56,8 @@ public class Util {
 	      this.logDbPort = prop.getProperty("log.dbPort");
 	      this.logDbUsername = prop.getProperty("log.dbUsername");
 	      this.logDbPassword = prop.getProperty("log.dbPassword");
-	      this.logTable = prop.getProperty("log.table");
+	      this.jobLogTable = prop.getProperty("log.jobLogTable");
+	      this.jobLogEntryTable = prop.getProperty("log.jobLogEntryTable");
 	      this.logDbType = prop.getProperty("log.dbType");
 	    }
 	    catch (IOException e)
