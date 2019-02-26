@@ -5,9 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.pentaho.di.core.KettleEnvironment;
-import org.pentaho.di.core.database.DatabaseMeta;
-import org.pentaho.di.core.logging.JobEntryLogTable;
-import org.pentaho.di.core.logging.JobLogTable;
+import org.pentaho.di.core.logging.KettleLogStore;
+import org.pentaho.di.core.logging.LoggingBuffer;
 import org.pentaho.di.job.Job;
 import org.pentaho.di.job.JobMeta;
 
@@ -16,7 +15,9 @@ public class StartKettleJob {
 	public static void main(String[] args) {
 		Util kettleUtil = new Util();
 		try {
-			KettleEnvironment.init();
+			KettleEnvironment.init(false);
+			LoggingBuffer loggingBuffer = KettleLogStore.getAppender();
+			loggingBuffer.addLoggingEventListener(new Log4jLogging());
 			//Logger.getLogger("org.pentaho.di").addAppender(new FileAppender(new SimpleLayout(), kettleUtil.kettleTemplateDir+"logger.log"));
 			List<String> jobFileList = getList(kettleUtil.kettleJobDir);
 			for (int i = 0; jobFileList != null && jobFileList.size() != 0 && i < jobFileList.size(); i++) {

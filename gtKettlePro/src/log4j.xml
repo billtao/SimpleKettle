@@ -9,17 +9,23 @@
   </appender>
   
   
-  <appender name="logfile" class="org.apache.log4j.FileAppender">
-      <param name="File" value="logs/kettle.log"/>
+  <appender name="logfile" class="org.apache.log4j.DailyRollingFileAppender">
+      <param name="File" value="./logs/gt-kettle.log"/>
+      <param name="DatePattern" value="'.'yyyy-MM-dd'.log'" />
       <layout class="org.apache.log4j.PatternLayout">
   	    <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %-5p %c{1}:%L - %m%n"/>
   	  </layout>
   </appender>
    
-   <logger name="org.pentaho.di">
+  <category name="org.pentaho.di" additivity="false">
+  	<priority value="DEBUG" />
+  	<appender-ref ref="logfile" />
+  </category>
+  
+<!--   <logger name="org.pentaho.di">
     <level value="off"/>
     <appender-ref ref="logfile" />
-  </logger>
+  </logger> -->
  
   <root>
     <priority value ="off"></priority>

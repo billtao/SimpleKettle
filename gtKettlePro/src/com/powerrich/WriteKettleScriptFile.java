@@ -83,7 +83,7 @@ public class WriteKettleScriptFile {
 					writeKtrFile(kettleUtil.kettleJobDir + teEntity.getTRANSFER_UPDATE_BASE_NAME() + ".ktr",
 							ktrUpdateBaseContext);
 
-					JobEntity jobEntity = Util.getJob(kettleUtil.jobInterval);
+					JobEntity jobEntity = kettleUtil.getJob(kettleUtil.jobInterval);
 					jobEntity.setJOB_NAME(teEntity.getTRANSFER_PROVIDER_TABLENAME_APPLY() + "_JOB");
 					jobEntity
 							.setTRANSFER_JOB_DEL_STEP_NAME(teEntity.getTRANSFER_PROVIDER_TABLENAME_APPLY() + "_DELETE");
@@ -142,7 +142,7 @@ public class WriteKettleScriptFile {
 	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_PORT", je.getLOG_DB_PORT());
 	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_TYPE", je.getLOG_DB_TYPE());
 	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_USERNAME", je.getLOG_DB_USERNAME());
-	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_ENCREPTED_PASSWORD", Encr.encryptPasswordIfNotUsingVariables(Password.pWORD(je.getLOG_DB_ENCREPTED_PASSWORD(), 2)));
+	    kjbTempXML = kjbTempXML.replaceAll("LOG_DB_ENCREPTED_PASSWORD", Encr.encryptPasswordIfNotUsingVariables(je.getLOG_DB_ENCREPTED_PASSWORD()));
 		return kjbTempXML;
 	}
 
@@ -198,7 +198,7 @@ public class WriteKettleScriptFile {
 	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_PORT", te.getLOG_DB_PORT());
 	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_TYPE", te.getLOG_DB_TYPE());
 	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_USERNAME", te.getLOG_DB_USERNAME());
-	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_ENCREPTED_PASSWORD", Encr.encryptPasswordIfNotUsingVariables(Password.pWORD(te.getLOG_DB_ENCREPTED_PASSWORD(), 2)));
+	        ktrTempXML = ktrTempXML.replaceAll("LOG_DB_ENCREPTED_PASSWORD", Encr.encryptPasswordIfNotUsingVariables(te.getLOG_DB_ENCREPTED_PASSWORD()));
 		} catch (RuntimeException e) {
 			e.printStackTrace();
 		}

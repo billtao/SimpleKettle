@@ -86,10 +86,17 @@ public class Util {
 	    return this.connection;
 	  }
 	 
-	  public static JobEntity getJob(String inteval)
+	  public JobEntity getJob(String inteval)
 	  {
 	    JobEntity je = new JobEntity();
 	    je.setJOB_INTERVAL_MINUTES(inteval);
+	    je.setLOG_DB_IP(this.logDbIp);
+	    je.setLOG_DB_TYPE(this.logDbType);
+	    je.setLOG_DB_NAME(this.logDbName);
+	    je.setLOG_DB_PORT(this.logDbPort);
+	    je.setLOG_DB_USERNAME(this.logDbUsername);
+	    je.setLOG_DB_ENCREPTED_PASSWORD(this.logDbPassword);
+	    je.setLOG_DB_TABLE(this.jobLogTable);
 	    return je;
 	  }
 	  
@@ -212,6 +219,13 @@ public class Util {
 				  ttfx.append("<update>Y</update></value>");
 				  te.setSOURCE_TABLE_FIELDS_STR(stfs.toString());
 				  te.setTARGET_TABLE_FIELDS_XML(ttfx.toString());
+				  te.setLOG_DB_IP(this.logDbIp);
+				  te.setLOG_DB_TYPE(this.logDbType);
+				  te.setLOG_DB_NAME(this.logDbName);
+				  te.setLOG_DB_PORT(this.logDbPort);
+				  te.setLOG_DB_USERNAME(this.logDbUsername);
+				  te.setLOG_DB_ENCREPTED_PASSWORD(this.logDbPassword);
+				  te.setLOG_ENTRY_TABLE_NAME(this.jobLogEntryTable);
 			  }
 		  }catch(Exception e) {
 			  e.printStackTrace();
